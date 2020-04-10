@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import GraphicsFactory from "./graphics";
 
 var config = {
   type: Phaser.AUTO,
@@ -12,6 +13,10 @@ const game = new Phaser.Game(config);
 
 function preload() {}
 
-function create() {}
+function create() {
+  const Graphics = GraphicsFactory(this);
+  Graphics.drawO(100, 100);
+  Graphics.drawX(100, 100);
+}
 
 function update() {}
