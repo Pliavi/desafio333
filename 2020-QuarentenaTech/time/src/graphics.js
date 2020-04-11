@@ -49,11 +49,44 @@ const Graphics = (scene) => {
     return clickable;
   }
 
+  function drawBoard(x, y) {
+    const lineWidth = 8;
+    const graphics = scene.add.graphics();
+    graphics.x = x;
+    graphics.y = y;
+    graphics.lineStyle(lineWidth, 0xffffff, 1);
+
     graphics.strokeLineShape(
-      new Phaser.Geom.Line(x + 30, y + 30, x + 60, y + 60)
+      new Phaser.Geom.Line(
+        0,
+        30 + 16 + 8 + lineWidth,
+        (30 + 16 + 12) * 3 + lineWidth * 2,
+        30 + 16 + 8 + lineWidth
+      )
     );
     graphics.strokeLineShape(
-      new Phaser.Geom.Line(x + 60, y + 30, x + 30, y + 60)
+      new Phaser.Geom.Line(
+        0,
+        (30 + 16 + 12) * 2 + lineWidth,
+        (30 + 16 + 12) * 3 + lineWidth * 2,
+        (30 + 16 + 12) * 2 + lineWidth
+      )
+    );
+    graphics.strokeLineShape(
+      new Phaser.Geom.Line(
+        30 + 16 + 8 + lineWidth,
+        0,
+        30 + 16 + 8 + lineWidth,
+        (30 + 16 + 12) * 3 + lineWidth * 2
+      )
+    );
+    graphics.strokeLineShape(
+      new Phaser.Geom.Line(
+        (30 + 16 + 12) * 2 + lineWidth,
+        0,
+        (30 + 16 + 12) * 2 + lineWidth,
+        (30 + 16 + 12) * 3 + lineWidth * 2
+      )
     );
   }
 
@@ -61,6 +94,7 @@ const Graphics = (scene) => {
     drawO,
     drawX,
     drawClickable,
+    drawBoard,
   };
 };
 export default Graphics;
