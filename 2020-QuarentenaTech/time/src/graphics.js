@@ -2,18 +2,13 @@ import Phaser from "phaser";
 
 /** @param {Phaser.Scene} scene */
 const Graphics = (scene) => {
-  let graphics = scene.add.graphics({
-    x: 0,
-    y: 0,
-    lineStyle: {
-      width: 8,
-      color: 0xffffff,
-      alpha: 1,
-    },
-    add: true,
-  });
   function drawO(x, y) {
-    graphics.strokeCircle(x, y, 17);
+    const graphics = scene.add.graphics();
+    graphics.x = x;
+    graphics.y = y;
+    graphics.lineStyle(8, 0xea8a8a, 1);
+
+    graphics.strokeCircle(0, 0, 15);
   }
 
   function drawX(x, y) {
