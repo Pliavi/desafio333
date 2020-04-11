@@ -15,7 +15,26 @@ const Graphics = (scene) => {
   function drawO(x, y) {
     graphics.strokeCircle(x, y, 17);
   }
+
   function drawX(x, y) {
+    const graphics = scene.add.graphics();
+    graphics.x = x;
+    graphics.y = y;
+    graphics.lineStyle(8, 0xbe9fe1, 1);
+
+    graphics.strokePoints(
+      [
+        { x: -15, y: -15 },
+        { x: 15, y: 15 },
+        { x: 0, y: 0 },
+        { x: -15, y: 15 },
+        { x: 15, y: -15 },
+      ],
+      false,
+      false
+    );
+  }
+
     graphics.strokeLineShape(
       new Phaser.Geom.Line(x + 30, y + 30, x + 60, y + 60)
     );
