@@ -35,6 +35,20 @@ const Graphics = (scene) => {
     );
   }
 
+  function drawClickable(pos, x, y) {
+    const graphics = scene.add.graphics();
+    graphics.x = x;
+    graphics.y = y;
+    graphics.fillStyle(0x00ff00, 1);
+
+    const rectGeom = new Phaser.Geom.Rectangle(-28, -28, 54, 54);
+    const clickable = graphics.fillRectShape(rectGeom);
+
+    clickable.setInteractive(rectGeom, Phaser.Geom.Rectangle.Contains);
+    clickable.pos = pos;
+    return clickable;
+  }
+
     graphics.strokeLineShape(
       new Phaser.Geom.Line(x + 30, y + 30, x + 60, y + 60)
     );
@@ -46,6 +60,7 @@ const Graphics = (scene) => {
   return {
     drawO,
     drawX,
+    drawClickable,
   };
 };
 export default Graphics;
