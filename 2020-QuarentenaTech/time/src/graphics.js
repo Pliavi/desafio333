@@ -40,6 +40,9 @@ const Graphics = (scene) => {
     const clickable = graphics.fillRectShape(rectGeom);
 
     clickable.setInteractive(rectGeom, Phaser.Geom.Rectangle.Contains);
+    clickable.on("pointerdown", function () {
+      drawO(x, y);
+    });
     clickable.pos = pos;
     return clickable;
   }
