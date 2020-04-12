@@ -45,6 +45,7 @@ const Graphics = (scene, socket) => {
       socket.emit("Player Move", { player: 1, move: { pos } });
     });
     clickable.pos = pos;
+    
     return clickable;
   }
 
