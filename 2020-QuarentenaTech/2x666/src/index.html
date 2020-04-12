@@ -3,19 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/settings/colors.css" />
+    <link rel="stylesheet" href="css/settings/fonts.css" />
+    <link rel="stylesheet" href="css/generic/normalize.css" />
+    <link rel="stylesheet" href="css/base/body.css" />
+    <link rel="stylesheet" href="css/base/canvas.css" />
+    <link rel="stylesheet" href="css/components/player-login.css" />
     <link rel="stylesheet" href="styles.css" />
     <title>Jogo da Velha!</title>
   </head>
   <body>
     <div class="player-login">
-      <h1>Selecione X ou O</h1>
+      <img
+        class="image-codfalado"
+        src="assets/codigofalado.png"
+        alt="Icone do codigo falado"
+      />
+      <h1 class="title">Selecione X ou O</h1>
       <div>
-        <button>X</button>
-        <button>O</button>
+        <button class="select">X</button>
+        <button class="select">O</button>
       </div>
-      <input type="text" placeholder="Seu Nome">
-      <button>Enviar</button>
+      <input class="username" type="text" placeholder="Seu Nome" autofocus />
+      <button class="play">Jogar</button>
     </div>
+    <script src="./js/player-login.js"></script>
     <script src="./game.js"></script>
   </body>
 </html>

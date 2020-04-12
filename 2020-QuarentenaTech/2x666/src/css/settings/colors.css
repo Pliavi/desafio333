@@ -1,0 +1,10 @@
+:root {
+  /* Backgrounds Colors*/
+  --primary-color-bg: #4b4747;
+  --secondary-color-bg: #eb007d;
+  --tertiary-color-bg: #f5c4de;
+
+  /*Fonts Colors*/
+  --primary-color-font: #fff;
+  --secondary-color-font: #eb007d;
+}
