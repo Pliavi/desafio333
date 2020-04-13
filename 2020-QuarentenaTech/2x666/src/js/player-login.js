@@ -1,7 +1,6 @@
 const $playerLogin = document.querySelector(".player-login");
 const $select = document.querySelectorAll(".select");
 const $play = document.querySelector(".play");
-const $canvas = document.querySelector("canvas");
 
 $select.forEach(($selected) =>
   $selected.addEventListener("click", function () {
@@ -13,6 +12,9 @@ $select.forEach(($selected) =>
 );
 
 $play.addEventListener("click", () => {
+  const $game = document.querySelector("#game > canvas");
+  $game.style.display = "block";
+
   $playerLogin.classList.add("-inactive");
   setTimeout(() => {
     $playerLogin.remove();
