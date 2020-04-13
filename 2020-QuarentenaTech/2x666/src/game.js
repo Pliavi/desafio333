@@ -4,6 +4,7 @@ import GraphicsFactory from "./graphics";
 
 var socket = io("http://localhost:3000");
 var config = {
+  parent: "root",
   type: Phaser.AUTO,
   width: 500,
   height: 500,

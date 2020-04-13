@@ -10,6 +10,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: opacity 1s;
+  opacity: 1;
+}
+
+.player-login.-inactive {
+  opacity: 0;
 }
 
 .player-login > .image-codfalado {
