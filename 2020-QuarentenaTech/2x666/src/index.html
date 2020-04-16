@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/settings/colors.css" />
+    <!-- <link rel="stylesheet" href="css/settings/colors.css" />
     <link rel="stylesheet" href="css/settings/fonts.css" />
     <link rel="stylesheet" href="css/generic/normalize.css" />
     <link rel="stylesheet" href="css/base/body.css" />
     <link rel="stylesheet" href="css/base/canvas.css" />
     <link rel="stylesheet" href="css/components/player-login.css" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css" /> -->
     <title>Jogo da Velha!</title>
   </head>
   <body>
-    <div class="player-login">
+    <div class="player-login" style="display: none;">
       <img
         class="image-codfalado"
         src="assets/codigofalado.png"
@@ -27,7 +27,7 @@
       <input class="username" type="text" placeholder="Seu Nome" autofocus />
       <button class="play">Jogar</button>
     </div>
-    <div id="game"></div>
+    <div id="game" style="display: block;"></div>
     <script src="./game.js"></script>
     <script src="./js/player-login.js"></script>
   </body>

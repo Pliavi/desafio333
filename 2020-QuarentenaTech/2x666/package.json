@@ -11,9 +11,11 @@
   },
   "devDependencies": {
     "@types/socket.io": "^2.1.4",
+    "nodemon": "^2.0.3",
     "parcel": "^1.12.4"
   },
   "scripts": {
-    "dev": "parcel src/index.html"
+    "dev": "parcel src/index.html",
+    "devserver": "nodemon backend/*"
   }
 }
