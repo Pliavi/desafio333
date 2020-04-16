@@ -15,7 +15,7 @@ var config = {
 socket.on("connect", function (socket) {
   console.log("The server Connected");
 });
-
+socket.on('message', console.log)
 const game = new Phaser.Game(config);
 
 function preload() {}

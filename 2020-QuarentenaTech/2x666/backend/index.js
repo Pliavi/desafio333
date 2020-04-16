@@ -5,6 +5,8 @@ var io = require("socket.io")(http);
 /** @type {SocketIO.Socket[]} */
 const players = [];
 
+let playerTurn = 0;
+
 io.on("connection", function (player) {
   player.name = `Player ${players.length}`;
   if (players.length < 2) {
@@ -12,30 +14,30 @@ io.on("connection", function (player) {
     players.push(player);
   }
 
+  player.on("disconnect", () => {
+    const winnerPlayer = players.find(
+      (findPlayer) => player.id !== findPlayer.id
+    );
+    winnerPlayer.send("winner");
+  });
+
   player.on("playerReady", (name) => (player.name = name));
-  player.on("playerSelectXorO", (data) => playerSelectXorO(data, player));
   player.on("playerMove", (data) => playerMove(data, player));
 });
 
-function playerSelectXorO(selection, player) {
-  const otherPlayer = players.find(
-    (playerSocket) => player.id !== playerSocket.id
-  );
-
-  const otherPlayerSelection = selection == "O" ? "X" : "O";
-
-  otherPlayer.send("finishSelection", {
-    forcedSelection: otherPlayerSelection,
-  });
-}
-
 function playerMove({ move }, player) {
-  player.moves.push(move);
-  console.log(player.name, player.moves);
-  players.forEach((playerSocket) => {
-    playerSocket.emit("playerMove", { move });
-  });
-  console.log("ganhouu uhuuuu", checkWinner(player));
+  if (player.id == players[playerTurn].id) {
+    player.moves.push(move);
+    console.log(player.name, player.moves);
+    players.forEach((playerSocket) => {
+      playerSocket.emit("playerMove", { move });
+    });
+    console.log("ganhouu uhuuuu", checkWinner(player));
+    playerTurn = playerTurn == 0 ? 1 : 0;
+    players[playerTurn].send("Your Turn");
+  } else {
+    player.send("Not your Turn");
+  }
 }
 
 function checkWinner(player) {
@@ -49,9 +51,9 @@ function checkWinner(player) {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  const winner = winMoves.some((winMove) => {
-    return winMove.every((move) => player.moves.includes(move));
-  });
+  const winner = winMoves.some((winMove) =>
+    winMove.every((move) => player.moves.includes(move))
+  );
   console.log(player.moves);
   return winner;
 }
