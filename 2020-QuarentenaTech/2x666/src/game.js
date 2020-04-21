@@ -12,16 +12,27 @@ var config = {
   debug: true,
 };
 
-socket.on("connect", function (socket) {
-  console.log("The server Connected");
-});
-socket.on('message', console.log)
 const game = new Phaser.Game(config);
+let clickables = [];
 
 function preload() {}
 
 function create() {
   const Graphics = GraphicsFactory(this, socket);
+
+  socket.on("connect", function (socket) {
+    console.log("The server Connected");
+  });
+  socket.on("playerMove", ({ move, player }) => {
+    console.log(move);
+    const { x, y } = clickables[move];
+    if (player == "you") {
+      Graphics.drawX(x, y);
+    } else {
+      Graphics.drawO(x, y);
+    }
+  });
+  socket.on("message", console.log);
 
   const screenSize = 500;
   const symbolSize = 30;
@@ -35,50 +46,68 @@ function create() {
 
   Graphics.drawBoard(boardPosition, boardPosition);
 
-  Graphics.drawClickable(
-    0,
-    symbolOffset + symbolSpace * 1,
-    symbolSpace * 1 + symbolOffset
+  clickables.push(
+    Graphics.drawClickable(
+      0,
+      symbolOffset + symbolSpace * 1,
+      symbolSpace * 1 + symbolOffset
+    )
   );
-  Graphics.drawClickable(
-    1,
-    symbolOffset + symbolSpace * 2,
-    symbolSpace * 1 + symbolOffset
+  clickables.push(
+    Graphics.drawClickable(
+      1,
+      symbolOffset + symbolSpace * 2,
+      symbolSpace * 1 + symbolOffset
+    )
   );
-  Graphics.drawClickable(
-    2,
-    symbolOffset + symbolSpace * 3,
-    symbolSpace * 1 + symbolOffset
+  clickables.push(
+    Graphics.drawClickable(
+      2,
+      symbolOffset + symbolSpace * 3,
+      symbolSpace * 1 + symbolOffset
+    )
   );
-  Graphics.drawClickable(
-    3,
-    symbolOffset + symbolSpace * 1,
-    symbolSpace * 2 + symbolOffset
+  clickables.push(
+    Graphics.drawClickable(
+      3,
+      symbolOffset + symbolSpace * 1,
+      symbolSpace * 2 + symbolOffset
+    )
   );
-  Graphics.drawClickable(
-    4,
-    symbolOffset + symbolSpace * 2,
-    symbolSpace * 2 + symbolOffset
+  clickables.push(
+    Graphics.drawClickable(
+      4,
+      symbolOffset + symbolSpace * 2,
+      symbolSpace * 2 + symbolOffset
+    )
   );
-  Graphics.drawClickable(
-    5,
-    symbolOffset + symbolSpace * 3,
-    symbolSpace * 2 + symbolOffset
+  clickables.push(
+    Graphics.drawClickable(
+      5,
+      symbolOffset + symbolSpace * 3,
+      symbolSpace * 2 + symbolOffset
+    )
   );
-  Graphics.drawClickable(
-    6,
-    symbolOffset + symbolSpace * 1,
-    symbolSpace * 3 + symbolOffset
+  clickables.push(
+    Graphics.drawClickable(
+      6,
+      symbolOffset + symbolSpace * 1,
+      symbolSpace * 3 + symbolOffset
+    )
   );
-  Graphics.drawClickable(
-    7,
-    symbolOffset + symbolSpace * 2,
-    symbolSpace * 3 + symbolOffset
+  clickables.push(
+    Graphics.drawClickable(
+      7,
+      symbolOffset + symbolSpace * 2,
+      symbolSpace * 3 + symbolOffset
+    )
   );
-  Graphics.drawClickable(
-    8,
-    symbolOffset + symbolSpace * 3,
-    symbolSpace * 3 + symbolOffset
+  clickables.push(
+    Graphics.drawClickable(
+      8,
+      symbolOffset + symbolSpace * 3,
+      symbolSpace * 3 + symbolOffset
+    )
   );
 
   /** Ativa o clique nos objetos com setInteractive ativado */

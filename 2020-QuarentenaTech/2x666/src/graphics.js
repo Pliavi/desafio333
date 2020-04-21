@@ -38,10 +38,11 @@ const Graphics = (scene, socket) => {
 
     const rectGeom = new Phaser.Geom.Rectangle(-28, -28, 54, 54);
     const clickable = graphics.fillRectShape(rectGeom);
+    clickable.x = x;
+    clickable.y = y;
 
     clickable.setInteractive(rectGeom, Phaser.Geom.Rectangle.Contains);
     clickable.on("pointerdown", function () {
-      drawO(x, y);
       socket.emit("playerMove", { move: pos });
     });
     clickable.pos = pos;
