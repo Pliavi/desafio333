@@ -1,47 +1,37 @@
-var app = require("express")();
-var http = require("http").createServer(app);
-var io = require("socket.io")(http);
+const app = require("express")();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+const utils = require("./utils.js");
 
 /** @type {SocketIO.Socket[]} */
-const players = [];
+const room = [];
 let playerTurn = 0;
 
-io.on("connection", function (player) {
-  if (players.length < 2) {
-    player.score = 0;
-    player.name = `Player ${players.length}`;
-    player.moves = [];
-    players.push(player);
-  }
+io.on("connection", function (playerSocket) {
+  const player = addPlayerToRoom(playerSocket);
 
   player.on("disconnect", () => {
-    const winnerPlayer = players.find(
-      (findPlayer) => player.id !== findPlayer.id
-    );
-    winnerPlayer.send("winner");
+    const winnerPlayer = utils.findAdversary(room, player);
+    // if(winnerPlayer){
+    winnerPlayer.emit("finish", "you win!");
+    // }
   });
 
-  player.on("playerReady", (name) => (player.name = name));
-  player.on("playerMove", (data) => playerMove(data, player));
+  player.on("ready", (name) => (player.name = name));
+  player.on("move", (data) => playerMove(data, player));
 });
 
-function playerMove({ move }, player) {
-  if (canMove(move)) {
-    if (player.id == players[playerTurn].id) {
-      player.moves.push(move);
-      console.log(player.name, player.moves);
+function playerMove({ move }, playerMoving) {
+  if (utils.playerCanMove(room, playerTurn, playerMoving, move)) {
+    playerMoving.moves.push(move);
+    playerMoving.emit("move", { move, player: "you" });
 
-      players[playerTurn].emit("playerMove", { move, player: "you" });
-      playerTurn = playerTurn == 0 ? 1 : 0;
-      players[playerTurn].emit("playerMove", { move, player: "enemy" });
+    playerTurn = playerTurn === 0 ? 1 : 0
+    const newPlayerOfTheTurn = room[playerTurn];
+    newPlayerOfTheTurn.emit("move", { move, player: "enemy" });
+    newPlayerOfTheTurn.emit("turn", "your turn");
 
-      players[playerTurn].send("Your Turn");
-      checkWinner(player);
-    } else {
-      player.send("Not your Turn");
-    }
-  } else {
-    console.log("Not Permitted this move");
+    checkWinner(playerMoving);
   }
 }
 
@@ -56,18 +46,35 @@ function checkWinner(player) {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  const winner = winMoves.some((winMove) =>
+
+  const isPlayerWinner = winMoves.some((winMove) =>
     winMove.every((move) => player.moves.includes(move))
   );
-  if (winner) {
+
+  if (isPlayerWinner) {
     player.score++;
+    player.emit("game_finish", "you win!");
+
+    const loser = utils.findAdversary(room, player);
+    loser.emit("game_finish", "you lose!");
   }
-  return winner;
 }
 
-function canMove(move) {
-  const hasMove = players.some((player) => player.moves.includes(move));
-  return !hasMove;
+function addPlayerToRoom(playerSocket) {
+  const playersInRoom = room.length;
+  const player = playerSocket;
+
+  player.score = 0;
+  player.name = "Player" + room.length;
+  player.moves = [];
+
+  if (playersInRoom < 2) {
+    room.push(player);
+
+    return player;
+  }
+
+  return playerSocket;
 }
 
 http.listen(3000, function () {

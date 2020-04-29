@@ -23,16 +23,20 @@ function create() {
   socket.on("connect", function (socket) {
     console.log("The server Connected");
   });
-  socket.on("playerMove", ({ move, player }) => {
-    console.log(move);
+
+  socket.on("game_error", console.log)
+  socket.on("game_finish", console.log)
+
+  socket.on("move", ({ move, player }) => {
+    console.log(move, player)
     const { x, y } = clickables[move];
+
     if (player == "you") {
       Graphics.drawX(x, y);
     } else {
       Graphics.drawO(x, y);
     }
   });
-  socket.on("message", console.log);
 
   const screenSize = 500;
   const symbolSize = 30;

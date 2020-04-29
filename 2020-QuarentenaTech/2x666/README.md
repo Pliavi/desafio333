@@ -11,3 +11,5 @@
 ---
 
 ## Front End
+
+- [ ] Fazer com que a jogada do player Oponente seja diferente. EX: Caso o player escolha o 'X' para jogar, O player oponente vai se tornar o 'O'.

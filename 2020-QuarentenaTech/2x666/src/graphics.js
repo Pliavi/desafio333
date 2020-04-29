@@ -43,7 +43,7 @@ const Graphics = (scene, socket) => {
 
     clickable.setInteractive(rectGeom, Phaser.Geom.Rectangle.Contains);
     clickable.on("pointerdown", function () {
-      socket.emit("playerMove", { move: pos });
+      socket.emit("move", { move: pos });
     });
     clickable.pos = pos;
 
