@@ -16,7 +16,10 @@ const findAdversary = (room, actualPlayer) => {
 
 function playerCanMove(room, turn, playerMoving, move) {
   const playerOfTheTurn = room[turn]; // XXX: O player do turno
-  const isPlayerTurn = playerMoving.id == playerOfTheTurn.id;
+  let isPlayerTurn = playerMoving.id == playerOfTheTurn.id;
+  if(turn == -1) {
+    isPlayerTurn = false;
+  }
   const isMoveable = !room.some((player) => player.moves.includes(move));
 
   if (!isMoveable) {

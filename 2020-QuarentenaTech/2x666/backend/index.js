@@ -6,6 +6,7 @@ const utils = require("./utils.js");
 /** @type {SocketIO.Socket[]} */
 const room = [];
 let playerTurn = 0;
+let moved = 0;
 
 io.on("connection", function (playerSocket) {
   const player = addPlayerToRoom(playerSocket);
@@ -23,10 +24,11 @@ io.on("connection", function (playerSocket) {
 
 function playerMove({ move }, playerMoving) {
   if (utils.playerCanMove(room, playerTurn, playerMoving, move)) {
+    moved++;
     playerMoving.moves.push(move);
     playerMoving.emit("move", { move, player: "you" });
 
-    playerTurn = playerTurn === 0 ? 1 : 0
+    playerTurn = playerTurn === 0 ? 1 : 0;
     const newPlayerOfTheTurn = room[playerTurn];
     newPlayerOfTheTurn.emit("move", { move, player: "enemy" });
     newPlayerOfTheTurn.emit("turn", "your turn");
@@ -54,9 +56,16 @@ function checkWinner(player) {
   if (isPlayerWinner) {
     player.score++;
     player.emit("game_finish", "you win!");
-
+    playerTurn = -1;
     const loser = utils.findAdversary(room, player);
     loser.emit("game_finish", "you lose!");
+  }
+
+  if (moved == 9 && !isPlayerWinner) {
+    player.emit("game_finish", "draw");
+    const adversary = utils.findAdversary(room, player);
+    adversary.emit("game_finish", "draw");
+    return false;
   }
 }
 
