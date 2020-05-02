@@ -15,7 +15,12 @@ var config = {
 const game = new Phaser.Game(config);
 let clickables = [];
 
-function preload() {}
+function preload() {
+  this.load.css({
+    key: "headers",
+    url: "https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap",
+  });
+}
 
 function create() {
   const Graphics = GraphicsFactory(this, socket);
@@ -24,11 +29,35 @@ function create() {
     console.log("The server Connected");
   });
 
-  socket.on("game_error", console.log)
-  socket.on("game_finish", console.log)
+  socket.on("game_error", console.log);
+  socket.on("game_finish", console.log);
+
+  socket.on("game_finish", (result) => {
+    if (result == "you win!") {
+      this.add.text(150, 200, "You \nWIN!", {
+        fontSize: 50,
+        fontFamily: '"Press Start 2P"',
+        fill: "#fcf300"
+      });
+    }
+    if (result == "you lose!") {
+      this.add.text(120, 200, ' You \nLOSER!', {
+        fontSize: 50,
+        fontFamily: '"Press Start 2P"',
+        fill: "#db3a34"
+      });
+    }
+    if (result == "draw") {
+      this.add.text(150, 200, "DRAW", {
+        fontSize: 50,
+        fontFamily: '"Press Start 2P"',
+        fill: '#ffffff'
+      });
+    }
+  });
 
   socket.on("move", ({ move, player }) => {
-    console.log(move, player)
+    console.log(move, player);
     const { x, y } = clickables[move];
 
     if (player == "you") {

@@ -13,9 +13,7 @@ io.on("connection", function (playerSocket) {
 
   player.on("disconnect", () => {
     const winnerPlayer = utils.findAdversary(room, player);
-    // if(winnerPlayer){
     winnerPlayer.emit("finish", "you win!");
-    // }
   });
 
   player.on("ready", (name) => (player.name = name));
