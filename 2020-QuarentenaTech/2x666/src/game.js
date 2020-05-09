@@ -18,7 +18,7 @@ let clickables = [];
 function preload() {
   this.load.css({
     key: "headers",
-    url: "https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap",
+    url: "./css/pres.css",
   });
 }
 
@@ -36,21 +36,21 @@ function create() {
     if (result == "you win!") {
       this.add.text(150, 200, "You \nWIN!", {
         fontSize: 50,
-        fontFamily: '"Press Start 2P"',
+        fontFamily: 'Press',
         fill: "#fcf300"
       });
     }
     if (result == "you lose!") {
       this.add.text(120, 200, ' You \nLOSER!', {
         fontSize: 50,
-        fontFamily: '"Press Start 2P"',
+        fontFamily: 'Press',
         fill: "#db3a34"
       });
     }
     if (result == "draw") {
       this.add.text(150, 200, "DRAW", {
         fontSize: 50,
-        fontFamily: '"Press Start 2P"',
+        fontFamily: 'Press',
         fill: '#ffffff'
       });
     }

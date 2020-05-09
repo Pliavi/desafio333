@@ -1,0 +1,36 @@
+body {
+  font-family: "Press Start 2P";
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  width: 300px;
+  margin: auto;
+}
+
+.grid > .cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid black;
+  font-size: 4rem;
+}
+
+.grid > .cell.top {
+  border-top: 0;
+}
+
+.grid > .cell.left {
+  border-left: 0;
+}
+
+.grid > .cell.right {
+  border-right: 0;
+}
+
+.grid > .cell.bottom {
+  border-bottom: 0;
+}
